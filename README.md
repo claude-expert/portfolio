@@ -1,8 +1,8 @@
-# Osvaldo Martini — Personal Portfolio
+# Claude Benedict Busole — Personal Portfolio
 
-Personal portfolio and studio website for **Osvaldo Martini**, Senior Frontend Engineer & Astro Studio Founder. Built with Astro 4, Three.js, and Tailwind CSS.
+Personal portfolio website for **Claude Benedict Busole**, Senior Full-Stack / Backend / Cloud Software Engineer. Built with Astro 4, Three.js, and Tailwind CSS.
 
-**Live demo:** [osvaldomartini.dev](https://osvaldomartini.dev) *(deploy target)*
+**Live demo:** [claudebusole.dev](https://claudebusole.dev) *(deploy target)*
 
 ---
 
@@ -47,9 +47,9 @@ d:\website\
 │   │   ├── Hero.astro            # Three.js WebGL hero + terminal mockup
 │   │   ├── About.astro           # Bio, stats, education card
 │   │   ├── Experience.astro      # Cinematic 3D career section (300vh scroll)
-│   │   ├── Projects.astro        # 6 client project cards (9fin, EiQ, Materialized, Shep, Modus, Webstacks)
+│   │   ├── Projects.astro        # 8 featured project cards (icon-based, no screenshots)
 │   │   ├── Skills.astro          # Categorized tech stack tags
-│   │   ├── Agency.astro          # Studio manifesto + before/after + services
+│   │   ├── Values.astro          # Engineering values + currently-expanding stacks
 │   │   ├── Contact.astro         # Contact CTA + email / LinkedIn / GitHub links
 │   │   └── Footer.astro          # Minimal footer
 │   └── styles/
@@ -72,6 +72,7 @@ Full-viewport WebGL scene rendered with Three.js:
 - Two animated colored point lights moving through the scene
 - Camera follows cursor with smooth parallax (`mousemove` → lerp)
 - Stats bar with count-up animation on scroll-in (`data-count` attribute)
+- Terminal mockup showing a CI/CD + AWS ECS deploy, not a frontend build
 
 ### Experience — Cinematic Career
 The most elaborate section. The section is `height: 300vh`, creating a scroll-driven movie effect:
@@ -84,31 +85,31 @@ The most elaborate section. The section is `height: 300vh`, creating a scroll-dr
 6. **Content panels** (`opacity` + `translateY` transitions) cross-fade at scroll thirds
 7. Film-style UI chrome: letterbox gradient bars, `01 / 03` scene counter, animated bottom marquee
 
-**Jobs:** Webstacks (2020–Present) → Reply (2018–2020) → Alten Italia (2014–2018)
+**Jobs:** Clearpath Financial Technologies (2024–2026) → Nexora Solutions Inc. (2020–2023) → Bell Canada (2019–2020)
 
 ### Projects
-Six client project cards in a responsive grid:
+Eight featured project cards in a responsive grid — icon-based (no screenshots, since these are internal/work projects without public URLs):
 
 | Project | Stack | Category |
 |---|---|---|
-| 9fin | Next.js · Sanity · TypeScript · Vercel | Fintech / B2B SaaS |
-| EiQ | Next.js · Sanity · React · TypeScript | Energy / Enterprise |
-| Materialized | Next.js · Contentful · TypeScript · Storybook | Data / B2B SaaS |
-| Shep | Astro · Sanity · TypeScript · Vercel | AI / SaaS |
-| Modus | Next.js · Storyblok · React · TypeScript | Consulting / Enterprise |
-| Webstacks | Astro · Sanity · TypeScript · Cloudflare | Agency / Studio |
+| AI Document Summarization API | Python · FastAPI · OpenAI/Claude API · Redis | AI / Cloud API |
+| Expense Splitting & Budget Tracker | React Native · Expo · Node.js · Plaid | FinTech / Mobile |
+| E-Commerce Price Tracker | Python · FastAPI · PostgreSQL · AWS Lambda | Data Pipeline / Serverless |
+| Fintech Transaction & API Platform | TypeScript · Node.js · AWS ECS · PostgreSQL | Fintech / Platform |
+| Distributed Auth & RBAC Services | OAuth 2.0 · OIDC · RBAC · Node.js | Security / Identity |
+| Cloud-Native Backend Migration | AWS ECS/Lambda/RDS · Docker · Kubernetes | Cloud / DevOps |
+| Healthcare & Enterprise SaaS Integrations | React · Next.js · PostgreSQL · MySQL | Healthcare / SaaS |
+| Enterprise Network Operations Dashboard | Java · Spring Boot · MySQL · JUnit | Enterprise / Network Ops |
 
-Each card has a 3D CSS tilt effect driven by `mousemove` (see [Interactivity](#interactivity)).
+Each card has a colored spotlight hover effect driven by `mousemove` (see [Interactivity](#interactivity)).
 
 ### Skills
-Eight categorized groups: Core Frameworks · Languages · Styling · CMS Platforms · Performance · Architecture · Tooling & DevOps · Process.
+Eight categorized groups: Frontend · Backend & APIs · Databases & Data · Cloud & DevOps · Testing & Quality · AI-Assisted Engineering · Architecture & Security · Process.
 
-### Agency / Studio
-Osvaldo's studio positioning section:
-- Manifesto quote on the Next.js → Astro shift
-- Before/After performance comparison table (LCP, JS bundle, Lighthouse, editor NPS)
-- "The Stack" five-card visual (Astro / Sanity / TypeScript / Tailwind / Vercel)
-- Four service cards: Marketing Website Development · Headless CMS Integration · Performance Optimization Audit · Design System & Component Library
+### Values
+Engineering values section:
+- Six value cards (reliability, documented APIs, automated testing, small services, cross-functional collaboration, mentorship)
+- "Currently Expanding" tag list of adjacent stacks being ramped up on
 
 ### Contact
 Email CTA + three link cards (Email · LinkedIn · GitHub) + location line.
@@ -138,7 +139,7 @@ Elements with `.tilt-card` get a perspective tilt driven by `mousemove`. The chi
 `data-count` + `data-suffix` on any element triggers a cubic-ease-out counter animation when the element scrolls into view.
 
 ```html
-<span data-count="11" data-suffix="+">0+</span>
+<span data-count="7" data-suffix="+">0+</span>
 ```
 
 ### Cinematic career scroll
@@ -216,15 +217,15 @@ Open `src/components/Projects.astro` and add an entry to the `projects` array:
 
 ```js
 {
-  name: 'Company',
-  url: 'company.com',
+  name: 'Project Name',
+  icon: '🚀',
   tagline: 'One-line description',
   description: 'Longer description...',
-  stack: ['Astro', 'Sanity', 'TypeScript'],
+  stack: ['Node.js', 'PostgreSQL', 'AWS'],
   color: '#6366f1',      // accent color for this card
-  initial: 'C',          // monogram letter
-  category: 'B2B SaaS',
-  metrics: ['LCP 0.4s', 'Perf 100'],
+  category: 'Backend / Cloud',
+  highlights: ['Highlight one.', 'Highlight two.'],
+  metrics: ['-60% latency', '99.9% uptime'],
 },
 ```
 
@@ -250,14 +251,13 @@ Built on Astro's static output:
 - Three.js (`~518 KB` minified, `~132 KB` gzip) is the only JS payload — loaded once
 - Fonts loaded via Google Fonts with `preconnect`
 - All animations are CSS transforms or WebGL — no layout thrashing
-- Target: Lighthouse 100 across all four categories in production
 
 ---
 
 ## Contact
 
-**Osvaldo Martini**
-- Email: [osvaldo.martini.dev@gmail.com](mailto:osvaldo.martini.dev@gmail.com)
-- LinkedIn: [linkedin.com/in/osvaldo-martini](https://linkedin.com/in/osvaldo-martini/)
-- GitHub: [github.com/omartini-dev](https://github.com/omartini-dev)
-- Location: Berlin, Germany
+**Claude Benedict Busole**
+- Email: [c.b.busole@gmail.com](mailto:c.b.busole@gmail.com)
+- LinkedIn: [linkedin.com/in/benedict-busole-079680116](https://linkedin.com/in/benedict-busole-079680116)
+- GitHub: [github.com/claude-expert](https://github.com/claude-expert)
+- Location: Mississauga, ON, Canada

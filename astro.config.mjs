@@ -2,6 +2,6 @@ import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
-  site: 'https://osvaldomartini.dev',
+  site: 'https://claudebusole.dev',
   integrations: [tailwind({ applyBaseStyles: false })],
 });

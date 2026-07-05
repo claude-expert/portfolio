@@ -1,0 +1,164 @@
+---
+const values = [
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/></svg>`,
+    title: 'Reliability first',
+    description:
+      'Build software that survives real production usage. Systems I own have supported $50M+ in monthly transaction volume without drama.',
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 17.5h7M17.5 14v7"/></svg>`,
+    title: 'Explicit, documented APIs',
+    description:
+      "Keep API contracts explicit, documented, and validated so they're easy for the next engineer to support — not just easy to ship.",
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>`,
+    title: 'Automated tests & observability',
+    description:
+      "Invest in automated tests, observability, and repeatable deployments. Raised one team's test coverage from 42% to 87% through TDD.",
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>`,
+    title: 'Small, maintainable services',
+    description:
+      'Prefer small, maintainable services over unnecessary complexity — no design for hypothetical requirements that never land.',
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>`,
+    title: 'Cross-functional collaboration',
+    description:
+      'Work closely with product, design, QA, DevOps, and operations teams — decisions get made with the full picture, not in isolation.',
+  },
+  {
+    icon: `<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>`,
+    title: 'Mentorship through review',
+    description:
+      'Mentor teammates through code reviews, architecture feedback, and practical examples — not just gatekeeping at merge time.',
+  },
+];
+
+const expanding = [
+  'Angular / NgRx', 'C# / .NET', 'Ruby on Rails', 'PHP / Laravel',
+  'Svelte / SvelteKit', 'Terraform / AWS CDK', 'Azure', 'GCP',
+];
+---
+
+<section id="values" class="py-24 px-6 relative overflow-hidden">
+  <!-- Animated canvas background -->
+  <canvas id="values-canvas" class="absolute inset-0 w-full h-full pointer-events-none" style="opacity: 0.8;"></canvas>
+
+  <div class="max-w-6xl mx-auto relative">
+    <!-- Header -->
+    <div class="reveal text-center mb-20">
+      <div class="section-label">Engineering Values</div>
+      <h2 class="text-4xl md:text-6xl font-black text-white leading-tight mb-6">
+        How I build software<br/>
+        <span class="gradient-text">that lasts.</span>
+      </h2>
+      <p class="text-zinc-400 text-xl max-w-2xl mx-auto leading-relaxed">
+        Practical judgment over dogma — using AI tools responsibly without skipping engineering
+        judgment, and investing in the things that make software supportable long after it ships.
+      </p>
+    </div>
+
+    <!-- Values grid -->
+    <div class="reveal">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {values.map((v, i) => (
+          <div class={`reveal reveal-delay-${(i % 2) + 1} card p-6 group hover:-translate-y-1 transition-transform duration-200`}>
+            <div class="w-10 h-10 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-4 group-hover:bg-indigo-500/20 transition-colors duration-200">
+              <Fragment set:html={v.icon} />
+            </div>
+            <div class="text-white font-bold mb-2">{v.title}</div>
+            <div class="text-zinc-400 text-sm leading-relaxed">{v.description}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Currently expanding -->
+    <div class="reveal mt-16 text-center">
+      <div class="section-label">Currently Expanding</div>
+      <h3 class="text-2xl font-bold text-white mb-6">Adjacent stacks I'm ramping up on.</h3>
+      <div class="flex flex-wrap justify-center gap-3">
+        {expanding.map((t) => (
+          <span class="tech-badge">{t}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Animated node-graph background
+  const canvas = document.getElementById('values-canvas') as HTMLCanvasElement | null;
+  if (!canvas) throw new Error('no canvas');
+  const ctx = canvas.getContext('2d')!;
+
+  const resize = () => {
+    canvas.width  = canvas.clientWidth  * devicePixelRatio;
+    canvas.height = canvas.clientHeight * devicePixelRatio;
+    ctx.scale(devicePixelRatio, devicePixelRatio);
+  };
+  resize();
+  window.addEventListener('resize', resize);
+
+  const NODE_COUNT = 45;
+  const W = () => canvas.clientWidth;
+  const H = () => canvas.clientHeight;
+
+  const COLORS = ['99,102,241', '139,92,246', '34,211,238', '168,85,247'];
+
+  const nodes = Array.from({ length: NODE_COUNT }, (_, i) => ({
+    x: Math.random() * W(),
+    y: Math.random() * H(),
+    vx: (Math.random() - 0.5) * 0.45,
+    vy: (Math.random() - 0.5) * 0.45,
+    r: 1.5 + Math.random() * 3,
+    color: COLORS[i % COLORS.length],
+  }));
+
+  const LINK_DIST = 180;
+
+  const draw = () => {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, W(), H());
+
+    const w = W(), h = H();
+
+    nodes.forEach(n => {
+      n.x += n.vx;
+      n.y += n.vy;
+      if (n.x < 0 || n.x > w) n.vx *= -1;
+      if (n.y < 0 || n.y > h) n.vy *= -1;
+    });
+
+    // Draw edges
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d  = Math.sqrt(dx * dx + dy * dy);
+        if (d < LINK_DIST) {
+          const alpha = (1 - d / LINK_DIST) * 0.35;
+          ctx.beginPath();
+          ctx.moveTo(nodes[i].x, nodes[i].y);
+          ctx.lineTo(nodes[j].x, nodes[j].y);
+          ctx.strokeStyle = `rgba(${nodes[i].color},${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${n.color},0.7)`;
+      ctx.fill();
+    });
+  };
+  draw();
+</script>
