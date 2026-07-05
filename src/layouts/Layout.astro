@@ -31,6 +31,8 @@ const {
           document.documentElement.dataset.theme = saved;
         } else if (window.matchMedia('(prefers-color-scheme: light)').matches) {
           document.documentElement.dataset.theme = 'light';
+        } else {
+          document.documentElement.dataset.theme = 'dark';
         }
       })();
     </script>
