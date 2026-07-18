@@ -1,6 +1,6 @@
 # Claude Benedict Busole — Personal Portfolio
 
-Personal portfolio website for **Claude Benedict Busole**, Senior Full-Stack / Backend / Cloud Software Engineer. Built with Astro 4, Three.js, and Tailwind CSS.
+Personal portfolio website for **Claude Benedict Busole**, Senior Software Engineer. Built with Astro 4, Three.js, and Tailwind CSS.
 
 **Live demo:** [claudebusole.dev](https://claudebusole.dev) *(deploy target)*
 
